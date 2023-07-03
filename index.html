@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vite + TS</title>
+</head>
+
+<body>
+  <main class="flex flex-col h-full overflow-y-auto px-24 py-12 max-md:px-12 max-md:py-6">
+    <div class="">
+      <div class="mb-6">
+        <label for="n-number" class="block mb-2 text-sm font-medium text-gray-900">Вводить 'n':</label>
+        <input type="number" inputmode="numeric" value="0" id="n-number"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+      </div>
+
+      <div class="mb-6">
+        <label for="k-number" class="block mb-2 text-sm font-medium text-gray-900">Вводить 'k':</label>
+        <input type="number" inputmode="numeric" value="0" id="k-number"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+      </div>
+
+      <button type="button" id="compute"
+        class="text-white bg-[#050708] hover:bg-[#050708]/80 focus:ring-4 focus:outline-none focus:ring-[#050708]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-[#050708]/40 dark:focus:ring-gray-600 mr-2 mb-2">
+        Решить
+      </button>
+    </div>
+    </div>
+    <ul id="result" class="flex flex-col justify-center w-full">
+      <ol>$$S(n,k) = k * S(n - 1, k) + S(n - 1, k - 1)$$</ol>
+    </ul>
+  </main>
+  <script type="module" src="/src/main.ts"></script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</body>
+
+</html>
