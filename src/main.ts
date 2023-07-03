@@ -3,8 +3,11 @@ import "./style.css";
 let N: number = 0,
     K: number = 0;
 
-function stirlingS2Calculator(n: number, k: number): [string[], number] {
-    const listOfComputations: string[] = [];
+type InputElement = HTMLInputElement | null;
+type Computation = { k: number; n: number; expression: string };
+
+function stirlingS2Calculator(n: number, k: number): [Computation[], number] {
+    const listOfComputations: Computation[] = [];
 
     function stirlingS2(n: number, k: number): number {
         if (n === k || k === 1) {
@@ -15,7 +18,7 @@ function stirlingS2Calculator(n: number, k: number): [string[], number] {
         }
 
         const answer = k * stirlingS2(n - 1, k) + stirlingS2(n - 1, k - 1);
-        listOfComputations.push(`$$S(${n},${k}) = ${k} * S(${n - 1}, ${k}) + S(${n - 1}, ${k - 1}) = ${answer}$$`);
+        listOfComputations.push({ k, n, expression: `$$S(${n},${k}) = ${k} * S(${n - 1}, ${k}) + S(${n - 1}, ${k - 1}) = ${answer}$$` });
         return answer;
     }
 
@@ -23,8 +26,6 @@ function stirlingS2Calculator(n: number, k: number): [string[], number] {
 
     return [listOfComputations, finalAnswer];
 }
-
-type InputElement = HTMLInputElement | null;
 
 const n = document.getElementById("n-number") as InputElement;
 const k = document.getElementById("k-number") as InputElement;
@@ -53,9 +54,35 @@ button?.addEventListener("click", () => {
 
     if (resultElement) resultElement.textContent = "";
 
-    for (const item of list.reverse()) {
+    for (let q = 0; q < list.length; q++) {
+        for (let e = 0; e < list.length; e++) {
+            if (list[q] != list[e] && list[q].k === list[e].k && list[q].n === list[e].n) {
+                list.splice(q, 1);
+            }
+        }
+    }
+
+    for (let q = 0; q < list.length; q++) {
+        for (let e = 0; e < list.length; e++) {
+            if (list[q] != list[e] && list[q].k === list[e].k && list[q].n === list[e].n) {
+                list.splice(q, 1);
+            }
+        }
+    }
+
+    for (let q = 0; q < list.length; q++) {
+        for (let e = 0; e < list.length; e++) {
+            if (list[q].n > list[e].n) {
+                const tmp = list[e];
+                list[e] = list[q];
+                list[q] = tmp;
+            }
+        }
+    }
+
+    for (const item of list) {
         const ol = document.createElement("ol");
-        ol.textContent = item;
+        ol.textContent = item.expression;
 
         resultElement?.appendChild(ol);
 
